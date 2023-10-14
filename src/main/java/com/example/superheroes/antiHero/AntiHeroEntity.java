@@ -1,4 +1,4 @@
-package com.example.superheroes.antiHeroes;
+package com.example.superheroes.antiHero;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
