@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @AllArgsConstructor
 @RestController
@@ -18,6 +21,19 @@ import java.util.UUID;
 public class AntiHeroController {
     private final AntiHeroService service;
     private final ModelMapper mapper;
+
+    @GetMapping
+    public List<AntiHeroDto> getAntiHeroes() {
+        var antiHeroList = StreamSupport
+                .stream(service.findAllAntiHeroes().spliterator(),
+                        false)
+                .collect(Collectors.toList());
+        return antiHeroList
+                .stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+
+    }
 
     @GetMapping("/{id}")
     public AntiHeroDto getAntiHeroById(@PathVariable("id") UUID id) {
