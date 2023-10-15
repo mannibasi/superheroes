@@ -5,11 +5,9 @@ import com.example.superheroes.antiHero.entity.AntiHeroEntity;
 import com.example.superheroes.antiHero.service.AntiHeroService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -22,6 +20,13 @@ public class AntiHeroController {
     @GetMapping("/{id}")
     public AntiHeroDto getAntiHeroById(@PathVariable("id") UUID id) {
         return convertToDto(service.findAntiHeroById(id));
+    }
+
+    @PostMapping
+    public AntiHeroDto postAntiHero(@RequestBody @Valid AntiHeroDto dto) {
+        var entity = convertToEntity(dto);
+        var antiHero = service.addAntiHero(entity);
+        return convertToDto(antiHero);
     }
 
     private AntiHeroDto convertToDto(AntiHeroEntity entity) {
