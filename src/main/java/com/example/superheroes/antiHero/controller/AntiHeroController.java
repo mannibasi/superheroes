@@ -38,6 +38,11 @@ public class AntiHeroController {
         service.updateAntiHero(id, entity);
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteAntiHeroById(@PathVariable("id") UUID id) {
+        service.removeAntiHeroById(id);
+    }
+
     private AntiHeroDto convertToDto(AntiHeroEntity entity) {
         return mapper.map(entity, AntiHeroDto.class);
     }
