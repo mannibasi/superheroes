@@ -44,4 +44,17 @@ public class AntiHeroH2ServiceTest {
         AntiHeroEntity savedAntiHero = antiHeroList.iterator().next();
         assertThat(savedAntiHero).isEqualTo(antiHero);
     }
+
+    @Test
+    public void shouldUpdateAntiHero() {
+        AntiHeroEntity antiHero = new AntiHeroEntity();
+        antiHero.setFirstName("Eddie");
+        antiHero.setLastName("Brock");
+        antiHero.setHouse("MCU");
+        AntiHeroEntity savedAntiHero = service.addAntiHero(antiHero);
+        savedAntiHero.setHouse("DC");
+        service.updateAntiHero(savedAntiHero.getId(),savedAntiHero);
+        AntiHeroEntity foundAntiHero = service.findAntiHeroById(savedAntiHero.getId());
+        assertThat(foundAntiHero.getHouse()).isEqualTo("DC");
+    }
 }
