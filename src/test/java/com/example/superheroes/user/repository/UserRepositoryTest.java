@@ -16,9 +16,20 @@ public class UserRepositoryTest {
     @Test
     public void itShouldCheckWhenUserEmailExists() {
         String email = "test@test.com";
-        UserEntity userEntity = new UserEntity(email, "3142523");
+        UserEntity userEntity = new UserEntity(email, "07111111123");
         underTest.save(userEntity);
         boolean expected = underTest.selectExistsEmail(email);
         assertThat(expected).isTrue();
+    }
+
+    @Test
+    public void itShouldFindUserWhenEmailExists() {
+        String email = "test@test.com";
+        UserEntity user = new UserEntity(email, "07111111123");
+        underTest.save(user);
+
+        UserEntity expected = underTest.findByEmail(email);
+
+        assertThat(expected).isEqualTo(user);
     }
 }
